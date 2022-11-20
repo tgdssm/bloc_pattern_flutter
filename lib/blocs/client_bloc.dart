@@ -17,14 +17,14 @@ class ClientBloc {
     _inputClientController.stream.listen(_mapEventToState);
   }
 
-  _mapEventToState(ClientEvent event) {
+  _mapEventToState(ClientEvent event) async {
     List<Client> clients = [];
     if(event is LoadClientEvent) {
-      clients = _clientRepository.initClients();
+      clients = await _clientRepository.initClients();
     } else if(event is AddClientEvent) {
-      clients = _clientRepository.addClient(event.client);
+      clients = await _clientRepository.addClient(event.client);
     } else if(event is RemoveClientEvent) {
-      clients = _clientRepository.removeClient(event.client);
+      clients = await _clientRepository.removeClient(event.client);
     }
 
     _outputClientController.add(ClientSuccessState(clients: clients));

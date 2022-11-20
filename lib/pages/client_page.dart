@@ -39,6 +39,9 @@ class _ClientPageState extends State<ClientPage> {
       body: StreamBuilder<ClientState>(
         stream: bloc.stream,
         builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(),);
+          }
           final clients = snapshot.data?.clients ?? [];
           return ListView.builder(
             itemCount: clients.length,
